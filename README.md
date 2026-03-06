@@ -17,7 +17,7 @@
 Everything you need to inject a DLL in 3 simple steps.
 
 ```cpp
-#include "Injector.h"
+#include "SuperInjector.h"
 
 int main() {
     Process proc;
