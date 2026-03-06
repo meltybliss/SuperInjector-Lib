@@ -36,3 +36,16 @@ int main() {
 
     return 0;
 }
+
+---
+
+## 🛠️ How it Works
+it performs a manual link-and-load process within the target process's context:
+
+
+
+1. **Section Mapping**: Copies each PE section (`.text`, `.data`, `.rdata`, etc.) to its respective virtual offset.
+2. **Base Relocation**: If the DLL isn't loaded at its preferred base, every absolute address in the code is patched to match the new location.
+3. **Import Resolution**: It manually loads all dependent DLLs and fills the Import Address Table (IAT).
+4. **TLS & SEH**: Ensures Thread Local Storage and Structured Exception Handling (x64) are correctly registered to prevent crashes.
+5. **Stealth Operation**: Once the `DllMain` is called, it wipes the PE headers to hide the DLL from simple memory scanners.
