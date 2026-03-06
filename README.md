@@ -47,7 +47,7 @@ This project is designed for **educational purposes** to understand how the Wind
 
 - Windows x64
 - C++17
-- Visual Studio 2019+ or compatible compiler
+
 
 ---
 
