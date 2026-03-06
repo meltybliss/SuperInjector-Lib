@@ -58,16 +58,22 @@ Example usage:
 ```cpp
 #include "SuperInjector.h"
 
-int main() {
-
+int main()
+{
     Process proc;
 
+    // Attach to a running process by name.
+    // Internally this resolves the PID and opens the process handle.
     if (!proc.Attach("notepad.exe"))
         return 1;
 
+    // Manually maps the specified DLL into the target process.
+    // This performs a custom PE loading procedure instead of LoadLibrary.
     auto result = SuperInjector::ManualMap(proc, "module.dll");
 
-    if (result) {
+    // If the injection succeeded, result contains the mapped module base.
+    if (result)
+    {
         printf("Success! Base Address: 0x%llx\n", result->baseAddress);
     }
 
