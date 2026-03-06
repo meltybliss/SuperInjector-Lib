@@ -7,46 +7,69 @@
 <h1 align="center">SuperInjectorLib</h1>
 
 <p align="center">
-  <strong>A high-performance, stealth-oriented C++ Manual Mapping DLL Injector.</strong><br>
-  Bypasses standard Windows APIs to map DLLs directly into target process memory.
+  <strong>A C++ Manual Mapping DLL Injector.</strong><br>
+  Implements a manual PE loader to map DLLs directly into a target process.
 </p>
 
 ---
 
-## 🚀 Quick Start
-Everything you need to inject a DLL in 3 simple steps.
+# Overview
+
+**SuperInjectorLib** is a C++ library that demonstrates how to perform **manual DLL mapping** on Windows.
+
+Instead of relying on `LoadLibrary`, the library manually performs the steps normally handled by the Windows loader:
+
+- PE header parsing
+- Section mapping
+- Base relocation
+- Import Address Table resolution
+- TLS callback execution
+- x64 exception registration
+- `DllMain` invocation
+
+This project is designed for **educational purposes** to understand how the Windows PE loader works internally.
+
+---
+
+# Features
+
+- Manual PE mapping
+- Base relocation handling
+- Import table resolution
+- TLS callback execution
+- x64 Structured Exception Handling (SEH) registration
+- Remote shellcode execution
+- Optional PE header wiping after injection
+
+---
+
+# Requirements
+
+- Windows x64
+- C++17
+- Visual Studio 2019+ or compatible compiler
+
+---
+
+# Quick Start
+
+Example usage:
 
 ```cpp
 #include "SuperInjector.h"
 
 int main() {
+
     Process proc;
-    SuperInjector injector;
 
-    // 1. Attach to target process
-    if (!proc.Attach("notepad.exe")) return 1;
+    if (!proc.Attach("notepad.exe"))
+        return 1;
 
-    // 2. Map your DLL manually
-    auto result = injector.ManualMap(proc, "module.dll");
+    auto result = SuperInjector::ManualMap(proc, "module.dll");
 
-    // 3. Success check
     if (result) {
         printf("Success! Base Address: 0x%llx\n", result->baseAddress);
     }
 
     return 0;
 }
-```
-
----
-
-## 🛠️ How it Works
-it performs a manual link-and-load process within the target process's context:
-
-
-
-1. **Section Mapping**: Copies each PE section (`.text`, `.data`, `.rdata`, etc.) to its respective virtual offset.
-2. **Base Relocation**: If the DLL isn't loaded at its preferred base, every absolute address in the code is patched to match the new location.
-3. **Import Resolution**: It manually loads all dependent DLLs and fills the Import Address Table (IAT).
-4. **TLS & SEH**: Ensures Thread Local Storage and Structured Exception Handling (x64) are correctly registered to prevent crashes.
-5. **Stealth Operation**: Once the `DllMain` is called, it wipes the PE headers to hide the DLL from simple memory scanners.
