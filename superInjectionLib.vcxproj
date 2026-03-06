@@ -131,11 +131,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Injector.cpp" />
+    <ClCompile Include="src\SuperInjector.cpp" />
     <ClCompile Include="src\Process.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Injector.h" />
+    <ClInclude Include="include\SuperInjector.h" />
     <ClInclude Include="include\Process.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
